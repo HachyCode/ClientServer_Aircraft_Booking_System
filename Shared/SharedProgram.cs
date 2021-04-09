@@ -1,12 +1,14 @@
 ﻿using System;
 
-namespace Client
+namespace Shared
 {
-    class Program
+    class SharedProgram
     {
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+
+            Console.ReadKey(true);
         }
     }
 }

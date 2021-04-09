@@ -2,11 +2,13 @@
 
 namespace Server
 {
-    class Program
+    class ServerProgram
     {
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+
+            Console.ReadKey(true);
         }
     }
 }
