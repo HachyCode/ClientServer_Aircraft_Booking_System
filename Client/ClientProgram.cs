@@ -1,12 +1,15 @@
 ﻿using System;
 
+
 namespace Client
 {
-    class Program
+    class ClientProgram
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            new DataClient().Run();
+
+            Console.ReadKey(true);
         }
     }
 }
