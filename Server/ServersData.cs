@@ -10,6 +10,7 @@ namespace Server
 {
     class ServersData
     {
+        DataItem response;
         public void Data()
         {
             IPHostEntry ipHostEntry = Dns.GetHostEntry(Dns.GetHostName());
@@ -44,7 +45,11 @@ namespace Server
                     string serialisedXml = data.Substring(0, data.Length - 5);
                     DataItem dataItem = DataItemSerialisation.GetDataItem(serialisedXml);
                     Console.WriteLine($"Data received: {dataItem.Id}");
-                    DataItem response = new DataItem("Green");
+
+                    string sheakData = Response(dataItem.Id);
+                    response = new DataItem(sheakData);
+                    Console.WriteLine($"Data send: {sheakData}");
+
                     string serialisedItem = DataItemSerialisation.GetSerialisedDataItem(response);
                     byte[] message = Encoding.ASCII.GetBytes(serialisedItem);
 
@@ -57,6 +62,18 @@ namespace Server
             {
                 Console.WriteLine(error.ToString());
             }
+        }
+
+        public string Response(string dataSend)
+        {
+            int[] a = new int[] {0, 0, 0, 0, 0};
+            string message;
+
+            message = Convert.ToString(a[0]);
+
+            Console.WriteLine($"Data calculated: {message}");
+
+            return message;
         }
     }
 }
