@@ -9,35 +9,58 @@ namespace Client
 {
     class DataClient
     {
-        public void Run()
+        //variables
+        IPHostEntry ipHostDetails;
+        IPAddress ipAddressDetail;
+        IPEndPoint localEndPoint;
+
+        Socket sender;
+
+        DataItem request;
+        DataItem dataItem;
+
+        string serialisedItem;
+
+        //sent
+        byte[] messageToSend;
+        int byteSent;
+
+        //received
+        byte[] messageReceived;
+        int byteRequest;
+
+        //response
+        string response;
+
+        public void Run(string data)
         {
             try
             {
-                IPHostEntry ipHostDetails = Dns.GetHostEntry(Dns.GetHostName());
-                IPAddress ipAddressDetail = ipHostDetails.AddressList[0];
-                IPEndPoint localEndPoint = new IPEndPoint(ipAddressDetail, 4747);
+                ipHostDetails = Dns.GetHostEntry(Dns.GetHostName());
+                ipAddressDetail = ipHostDetails.AddressList[0];
+                localEndPoint = new IPEndPoint(ipAddressDetail, 4747);
 
-                Socket sender = new Socket(ipAddressDetail.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                sender = new Socket(ipAddressDetail.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
                 try
                 {
-                    DataItem request = new DataItem("Client info");
-                    string serialisedItem = DataItemSerialisation.GetSerialisedDataItem(request);
+                    request = new DataItem(data);
+                    serialisedItem = DataItemSerialisation.GetSerialisedDataItem(request);
                     sender.Connect(localEndPoint);
                     Console.WriteLine($"Socket connected to: {sender.RemoteEndPoint}");
 
                     //send data request to server
-                    byte[] messageToSend = Encoding.ASCII.GetBytes(serialisedItem + "<EOF>");
-                    int byteSent = sender.Send(messageToSend);
+                    messageToSend = Encoding.ASCII.GetBytes(serialisedItem + "<EOF>");
+                    byteSent = sender.Send(messageToSend);
 
                     //Data buffer
-                    byte[] messageReceived = new byte[4096];
+                    messageReceived = new byte[4096];
 
                     //Recieve answer from server
-                    int byteRecv = sender.Receive(messageReceived);
-                    string response = Encoding.ASCII.GetString(messageReceived, 0, byteRecv);
+                    byteRequest = sender.Receive(messageReceived);
+                    response = Encoding.ASCII.GetString(messageReceived, 0, byteRequest);
 
-                    DataItem dataItem = DataItemSerialisation.GetDataItem(response);
+                    dataItem = DataItemSerialisation.GetDataItem(response);
                     Console.WriteLine($"Received from Server: {dataItem.Id}");
                 }
                 catch (Exception error)
