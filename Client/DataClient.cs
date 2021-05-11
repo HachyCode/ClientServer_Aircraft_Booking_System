@@ -47,10 +47,10 @@ namespace Client
                     request = new DataItem(data);
                     serialisedItem = DataItemSerialisation.GetSerialisedDataItem(request);
                     sender.Connect(localEndPoint);
-                    Console.WriteLine($"Socket connected to: {sender.RemoteEndPoint}");
+                    //Console.WriteLine($"Socket connected to: {sender.RemoteEndPoint}");
 
                     //send data request to server
-                    messageToSend = Encoding.ASCII.GetBytes(serialisedItem + "<EOF>");
+                    messageToSend = Encoding.Unicode.GetBytes(serialisedItem + "<EOF>");
                     byteSent = sender.Send(messageToSend);
 
                     //Data buffer
@@ -58,10 +58,11 @@ namespace Client
 
                     //Recieve answer from server
                     byteRequest = sender.Receive(messageReceived);
-                    response = Encoding.ASCII.GetString(messageReceived, 0, byteRequest);
+                    response = Encoding.Unicode.GetString(messageReceived, 0, byteRequest);
 
                     dataItem = DataItemSerialisation.GetDataItem(response);
-                    Console.WriteLine($"Received from Server: {dataItem.Id}");
+                    //Console.WriteLine($"Received from Server: {dataItem.Id}");
+                    Console.WriteLine(DataManagment.DataLayout(dataItem.Id));
                 }
                 catch (Exception error)
                 {

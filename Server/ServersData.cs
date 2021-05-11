@@ -38,7 +38,7 @@ namespace Server
                     while (true)
                     {
                         int amountOfBytesReseved = clientSocket.Receive(bytes);
-                        data += Encoding.ASCII.GetString(bytes, 0, amountOfBytesReseved);
+                        data += Encoding.Unicode.GetString(bytes, 0, amountOfBytesReseved);
                         if (data.IndexOf("<EOF>", StringComparison.Ordinal) > -1) break;
                     }
 
@@ -51,7 +51,7 @@ namespace Server
                     Console.WriteLine($"Data send: {sheakData}");
 
                     string serialisedItem = DataItemSerialisation.GetSerialisedDataItem(response);
-                    byte[] message = Encoding.ASCII.GetBytes(serialisedItem);
+                    byte[] message = Encoding.Unicode.GetBytes(serialisedItem);
 
                     clientSocket.Send(message);
                     clientSocket.Shutdown(SocketShutdown.Both);
@@ -66,10 +66,7 @@ namespace Server
 
         public string Response(string dataSend)
         {
-            int[] a = new int[] {0, 0, 0, 0, 0};
-            string message;
-
-            message = Convert.ToString(a[0]);
+            string message = Hashing.SendHashTable();
 
             Console.WriteLine($"Data calculated: {message}");
 

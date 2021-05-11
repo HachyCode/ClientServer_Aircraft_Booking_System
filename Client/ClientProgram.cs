@@ -16,10 +16,7 @@ namespace Client
 
         public static string Math()
         {
-            Console.Write("2 * 2 = ");
-            string answer = Console.ReadLine();
-
-            Console.WriteLine($"Your answer: {answer}\n");
+            string answer = "2";
             return answer;
         }
     }
