@@ -33,14 +33,28 @@ namespace Server
             storage[a_key] = $"type: {type}\n";
         }
 
-        public void RemovingStorage(int r_key)
-        {
-            storage[r_key] = null;
-        }
-
         public string FindingStorage(int f_key)
         {
-            return storage[f_key];
+            string data;
+
+            if (storage[f_key] == null)
+            {
+                return null;
+            }
+            else
+            {
+                data = $"{storage[f_key]}¶Available seat: ";
+            }
+
+            for (int i = 0; i < maxSeat; i++)
+            {
+                if (PlaceStatesStorage[f_key, i] == SeatStates.Available)
+                {
+                    data = data + $"{i} ";
+                }
+            }
+
+            return data;
         }
     }
 }

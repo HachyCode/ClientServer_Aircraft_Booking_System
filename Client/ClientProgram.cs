@@ -5,19 +5,12 @@ namespace Client
 {
     class ClientProgram
     {
+        
         static void Main(string[] args)
         {
-
-            new DataClient().Run(Math());
-
-
-            Console.ReadKey(true);
+            new ClientModule().Run();
         }
 
-        public static string Math()
-        {
-            string answer = "2";
-            return answer;
-        }
+       
     }
 }

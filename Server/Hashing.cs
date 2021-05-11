@@ -10,7 +10,6 @@ namespace Server
         static Hashtable InfoHash;
 
         public static int arraySize = 53;
-
         public string Value { get; set; }
 
         public Hashing()
@@ -82,24 +81,26 @@ namespace Server
             bool found = false;
             int indices = 0;
 
+            int i = 0;
+
             do
             {
-                if (InfoHash.ContainsKey(f_k + indices * indices) && InfoHash[f_k + indices * indices].ToString() == pi)
+                Console.WriteLine(i);
+                bool value = (Convert.ToString(InfoHash[f_k + indices * indices]) == pi);
+                if (InfoHash.ContainsKey(f_k + indices * indices) && value)
                 {
                     Console.WriteLine($"Found Key: {f_k + indices * indices} / Value: {InfoHash[f_k + indices * indices]} \n");
                     found = true;
                 }
+                else if (indices <= arraySize)
+                {
+                    indices++;
+                }
                 else
                 {
-                    if (indices <= arraySize)
-                    {
-                        indices++;
-                    }
-                    else
-                    {
-                        found = true;
-                    }
+                    found = true;
                 }
+                i++;
 
             } while (!found);
 
@@ -124,8 +125,6 @@ namespace Server
             {
                 hashtable = hashtable + $"¶¶Key: {entry.Key} Value: {entry.Value}¶" + ServerModel.store.FindingStorage(Int32.Parse($"{entry.Key}"));
             }
-
-            Console.WriteLine(hashtable);
 
             return hashtable;
         }

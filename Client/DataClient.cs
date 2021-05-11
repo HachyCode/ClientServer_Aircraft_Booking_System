@@ -61,7 +61,6 @@ namespace Client
                     response = Encoding.Unicode.GetString(messageReceived, 0, byteRequest);
 
                     dataItem = DataItemSerialisation.GetDataItem(response);
-                    //Console.WriteLine($"Received from Server: {dataItem.Id}");
                     Console.WriteLine(DataManagment.DataLayout(dataItem.Id));
                 }
                 catch (Exception error)

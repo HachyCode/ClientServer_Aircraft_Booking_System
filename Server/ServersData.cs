@@ -44,11 +44,11 @@ namespace Server
 
                     string serialisedXml = data.Substring(0, data.Length - 5);
                     DataItem dataItem = DataItemSerialisation.GetDataItem(serialisedXml);
-                    Console.WriteLine($"Data received: {dataItem.Id}");
+                    Console.WriteLine($"\nData received: {dataItem.Id}\n");
 
-                    string sheakData = Response(dataItem.Id);
+                    string sheakData = DataManagmentServer.DataLayout(dataItem.Id);
                     response = new DataItem(sheakData);
-                    Console.WriteLine($"Data send: {sheakData}");
+                    Console.WriteLine($"Data send: \n{sheakData}\n");
 
                     string serialisedItem = DataItemSerialisation.GetSerialisedDataItem(response);
                     byte[] message = Encoding.Unicode.GetBytes(serialisedItem);
@@ -62,15 +62,6 @@ namespace Server
             {
                 Console.WriteLine(error.ToString());
             }
-        }
-
-        public string Response(string dataSend)
-        {
-            string message = Hashing.SendHashTable();
-
-            Console.WriteLine($"Data calculated: {message}");
-
-            return message;
         }
     }
 }

@@ -40,7 +40,6 @@ namespace Server
         //Methods
         public void Run()
         {
-            stMenu.StartMessage();
             StoreInput();
         }
 
@@ -108,12 +107,9 @@ namespace Server
         {
 
         }
-        public static void FindInput()
+        public static string FindInput(int flighNumber)
         {
-            UserInput();
-            currentFlight = GetPlane(PlaceStates, PlaceTypes, AircraftType, Destination, Origin, SeatAmount, DepartureTime, ArrivalTime, Cost, FlightBarcode);
-            hash.Value = currentFlight.GetValue(currentFlight.FlightBarcode);
-            store.FindingStorage(hash.FindingHashing(hash.HashKey(hash.Value), hash.Value));
+            return store.FindingStorage(flighNumber);
         }
     }
 }

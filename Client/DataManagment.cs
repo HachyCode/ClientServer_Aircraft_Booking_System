@@ -20,6 +20,11 @@ namespace Client
                 return ManagingHTD();
             }
 
+            //FID = flight info data
+            else if (dataChar[0] == 'F' && dataChar[1] == 'I' && dataChar[2] == 'D')
+            {
+                return ManagingFID();
+            }
             return message;
         }
 
@@ -30,6 +35,23 @@ namespace Client
             {
                 //Console.WriteLine($"dataChar[element]: {dataChar[i]} / element: {i}");
                 if(dataChar[i] == dataSeperation)
+                {
+                    data = data + "\n";
+                }
+                else
+                {
+                    data = data + dataChar[i];
+                }
+            }
+            return data;
+        }
+        public static string ManagingFID()
+        {
+            //Normaly, should use foreach loop, but it was giving a folty data
+            for (int i = 3; i < dataChar.Length; i++)
+            {
+                //Console.WriteLine($"dataChar[element]: {dataChar[i]} / element: {i}");
+                if (dataChar[i] == dataSeperation)
                 {
                     data = data + "\n";
                 }
